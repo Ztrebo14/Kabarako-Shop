@@ -1,0 +1,9 @@
+.navbar-wrapper {
+    background-color: green;
+}
+.navbar-wrapper a{
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: row;
+}
