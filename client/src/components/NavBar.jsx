@@ -7,8 +7,8 @@ const NavBar = () => {
     <>
         <div className="navbar-wrapper">
             <NavLink to={'/'}>Dashboard</NavLink>
+            <NavLink to={'display-item'}>Coffee List</NavLink>
             <NavLink to={'add-item'}>Add Item</NavLink>
-            <NavLink>Home</NavLink>
             <NavLink>Home</NavLink>
             <NavLink>Home</NavLink>
         </div>

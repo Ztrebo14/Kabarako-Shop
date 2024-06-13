@@ -1,0 +1,21 @@
+.displayCoffeeItem-container {
+    position: relative;
+}
+
+.displayCoffeeItem-component {
+    /* display: flex;
+    flex-direction: column; */
+    height: 560px;
+    overflow-y: auto;
+}
+
+.displayCoffeeItem-component ul{
+    position: relative;
+    background: linear-gradient(lightblue, blue);
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 10px 10px 10px;
+    padding: 10px;
+    border-radius: 10px;
+
+}

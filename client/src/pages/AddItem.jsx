@@ -3,12 +3,17 @@ import { Formik, Field, Form, ErrorMessage } from 'formik'
 import MySelect from '../components/MySelect'
 import * as Yup from 'yup'
 import CoffeeNameSelect from '../components/CoffeeNameSelect'
+import { useCoffeeItem } from '../contexts/ItemContext'
+import { v4 as uuidv4 } from 'uuid'
 
 const AddItem = () => {
+    const { coffeeList, setCoffeeList } = useCoffeeItem()
+    
   return (
     <>
         <Formik
             initialValues={{
+                id: uuidv4(),
                 coffeeType: '',
                 coffeeName: '',
                 coffeeSize: '',
@@ -26,8 +31,10 @@ const AddItem = () => {
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     alert(JSON.stringify(values, null, 2))
+                    setCoffeeList([...coffeeList, values])
+                    console.log(coffeeList)
                     setSubmitting(false)
-                }, 3000)
+                }, 1000)
             }}
         >
         <Form>
