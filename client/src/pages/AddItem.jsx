@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
-import MySelect from '../components/MySelect'
 import * as Yup from 'yup'
-import CoffeeNameSelect from '../components/CoffeeNameSelect'
+import { db } from '../firebase'
+import { collection, addDoc } from 'firebase/firestore'
 import { useCoffeeItem } from '../contexts/ItemContext'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -28,13 +28,24 @@ const AddItem = () => {
                 coffeePrice: Yup.number().max(200, 'Must be less than 200').required('Required').positive(),
                 coffeeStock: Yup.number().max(999, 'Maximum amount of stock').required('Required')
             })}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2))
+            onSubmit={async (values, { setSubmitting, resetForm }) => {
+                // setTimeout(() => {  
+                //     alert(JSON.stringify(values, null, 2))
+
+                //     console.log(coffeeList)
+                //     setSubmitting(false)
+                // }, 1000)
+                try {
+                    const docRef = await addDoc(collection(db, 'coffeeList'), values)
+                    alert('Item added successfully')
                     setCoffeeList([...coffeeList, values])
-                    console.log(coffeeList)
+                    resetForm()
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    alert("Error adding item, please try again.");
+                } finally {
                     setSubmitting(false)
-                }, 1000)
+                }
             }}
         >
         <Form>

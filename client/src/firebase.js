@@ -25,10 +25,10 @@ export const auth = getAuth(app)
 export const db = getFirestore(app)
 
 // Detect auth state
-onAuthStateChanged(auth, user => {
-  if(user != null) {
-    console.log('Logged in!')
-  } else {
-    console.log('No user')
-  }
-})
+// onAuthStateChanged(auth, user => {
+//   if(user != null) {
+//     console.log('Logged in!')
+//   } else {
+//     console.log('No user')
+//   }
+// })
