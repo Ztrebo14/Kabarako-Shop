@@ -7,13 +7,13 @@ import { useCoffeeItem } from '../contexts/ItemContext'
 import { v4 as uuidv4 } from 'uuid'
 
 const AddItem = () => {
-    const { coffeeList, setCoffeeList } = useCoffeeItem()
+    const { coffeeList, addItem } = useCoffeeItem()
     
   return (
     <>
         <Formik
             initialValues={{
-                id: uuidv4(),
+                // id: uuidv4(),
                 coffeeType: '',
                 coffeeName: '',
                 coffeeSize: '',
@@ -29,17 +29,14 @@ const AddItem = () => {
                 coffeeStock: Yup.number().max(999, 'Maximum amount of stock').required('Required')
             })}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
-                // setTimeout(() => {  
-                //     alert(JSON.stringify(values, null, 2))
-
-                //     console.log(coffeeList)
-                //     setSubmitting(false)
-                // }, 1000)
                 try {
-                    const docRef = await addDoc(collection(db, 'coffeeList'), values)
+                    // addItem function that add document reference to firestore db
+                    await addItem(values)
                     alert('Item added successfully')
-                    setCoffeeList([...coffeeList, values])
                     resetForm()
+
+                    // lets find the firestore document id
+                    console.log('This is the Document ID: ', values)
                 } catch (error) {
                     console.error("Error adding document: ", error);
                     alert("Error adding item, please try again.");
