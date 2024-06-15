@@ -1,6 +1,24 @@
-.root-container {
+.rootRoute-container {
+    padding: 20px 0;
+    height: 570px;
+}
+
+.grid-contianer {
     display: grid;
     grid-template-columns: 0.4fr 1.6fr;
+    gap: 10px;
+}
 
+.navbar {
+
+}
+
+.outlet {
+    background-color: rgb(94, 94, 94);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 0 5px;
+    height: 550px;
+    overflow-y: hidden;
 }
 

@@ -43,6 +43,7 @@ const ItemProvider = ({ children }) => {
   
         // Remove the item from the local state
         setCoffeeList(prevList => prevList.filter(item => item.id !== coffeeId));
+        alert('Item Deleted!')
         console.log(`Document with ID ${coffeeId} successfully removed from local state`);
 
       } catch (error) {

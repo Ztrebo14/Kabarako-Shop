@@ -7,13 +7,20 @@ import { useCoffeeItem } from '../contexts/ItemContext'
 import { v4 as uuidv4 } from 'uuid'
 
 const AddItem = () => {
-    const { coffeeList, addItem } = useCoffeeItem()
-    
+    const { addItem } = useCoffeeItem()
+    const [ coffeeCategory, setCoffeeCategory ] = useState('')
+
+    const coffeeNames = {
+        Arabica: ['Cappuccino', 'Latte', 'Flat White', 'Americano', 'ColdBrew', 'Mocha'],
+        Robusta: ['Cafe au Lait', 'Vietnamese', 'Doppio', 'Instant Coffee', 'Iced Coffee'],
+        Mixed: ['Espresso', 'Ristretto', 'Macchiato']
+    }
+
   return (
     <>
         <Formik
             initialValues={{
-                // id: uuidv4(),
+                coffeeId: uuidv4(),
                 coffeeType: '',
                 coffeeName: '',
                 coffeeSize: '',
@@ -45,52 +52,67 @@ const AddItem = () => {
                 }
             }}
         >
-        <Form>
-            <label>Coffee Type:</label>
-                <Field as='select' type='text' name='coffeeType' >
-                    <option value=''>Select Coffee Type</option>
-                    <option value='arabica'>Arabica</option>
-                    <option value='robusta'>Robusta</option>
-                    <option value='mixed'>Mixed</option>
-                </Field>
-                <ErrorMessage name='coffeeType' />
-                <br />
-                <label>Coffee Name:</label>
-                <Field as='select' type='text' name='coffeeName' >
-                    <option value="">Select Coffee Name</option>
-                    <option value="cappuccino">Cappuccino</option>
-                    <option value="latte">Latte</option>
-                    <option value="flat white">Flat White</option>
-                    <option value="americano">Americano</option>
-                    <option value="cold brew">Cold Brew</option>
-                    <option value="mocha">Mocha</option>
-                </Field>
-                <ErrorMessage name='coffeeName' />
-                <br />
-                <label>Size:</label>
-                <Field as='select' type='text' name='coffeeSize' >
-                    <option value="">Select Size</option>
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Hard</option>
-                </Field>
-                <ErrorMessage name='coffeeSize' />
-                <br />
-                <label>Price:</label>
-                <Field  type='number' name='coffeePrice' placeholder='Price' />
-                <ErrorMessage name='coffeePrice' />
-                <br />
-                <label>Cost:</label>
-                <Field  type='number' name='coffeeCost' placeholder='Cost' />
-                <ErrorMessage name='coffeeCost' />
-                <br />
-                <label>Amount in Stock:</label>
-                <Field  type='number' name='coffeeStock' placeholder='Amount in Stock' />
-                <ErrorMessage name='coffeeStock' />
-                <br />
+        {({setFieldValue}) => (
+            <Form>
+                <label>Coffee Type:</label>
+                    <Field 
+                        as='select' 
+                        type='text' 
+                        name='coffeeType' 
+                        onChange={(e) => {
+                            const value = e.target.value
+                            setCoffeeCategory(value)
+                            setFieldValue('coffeeType', value)
+                            setFieldValue('coffeeName', '') //Is to reset the coffee name when coffee type change
+                        }} 
+                    >
+                        <option value=''>Select Coffee Type</option>
+                        <option value='Arabica'>Arabica</option>
+                        <option value='Robusta'>Robusta</option>
+                        <option value='Mixed'>Mixed</option>
+                    </Field>
+                    <ErrorMessage name='coffeeType' />
+                    <br />
+                    <label>Coffee Name:</label>
+                    { coffeeCategory && (
+                        <>
+                            <Field as='select' type='text' name='coffeeName' >
+                                <option value="">Select Coffee Name</option>
+                                { coffeeNames[coffeeCategory].map((name) => (
+                                    <option key={name} value={name}>
+                                        {name}
+                                    </option>
+                                ))}
+                            </Field>
+                            <ErrorMessage name='coffeeName' />
+                            <br />
+                        </>
+                    )}
+                    <label>Size:</label>
+                    <Field as='select' type='text' name='coffeeSize' >
+                        <option value="">Select Size</option>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </Field>
+                    <ErrorMessage name='coffeeSize' />
+                    <br />
+                    <label>Price:</label>
+                    <Field  type='number' name='coffeePrice' placeholder='Price' />
+                    <ErrorMessage name='coffeePrice' />
+                    <br />
+                    <label>Cost:</label>
+                    <Field  type='number' name='coffeeCost' placeholder='Cost' />
+                    <ErrorMessage name='coffeeCost' />
+                    <br />
+                    <label>Amount in Stock:</label>
+                    <Field  type='number' name='coffeeStock' placeholder='Amount in Stock' />
+                    <ErrorMessage name='coffeeStock' />
+                    <br />
 
-                <button type='submit'>Submit</button>
-        </Form>
+                    <button type='submit'>Submit</button>
+            </Form>
+        )}
         </Formik>
     </>
   )

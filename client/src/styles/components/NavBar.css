@@ -1,9 +1,26 @@
 .navbar-wrapper {
-    background-color: green;
+    background: linear-gradient(#96683a, rgb(45, 45, 45));
+    height: 550px; 
+    width: 280px;
+
+    padding: 10px 0 ;
+    border-radius: 0 15px 15px 0;
 }
-.navbar-wrapper a{
+.navbar-wrapper a {
     text-decoration: none;
     color: white;
     display: flex;
     flex-direction: row;
+}
+
+.nav-links {
+    padding: 0 20px 0 20px;
+}
+
+.nav-links a {
+    background-color: aqua;
+    color: black;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 10px;
 }
