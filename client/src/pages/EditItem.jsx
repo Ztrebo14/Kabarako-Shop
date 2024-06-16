@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/pages/AddItem.css'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
+import backBtn from '../assets/icons/return.png'
 import * as Yup from 'yup'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCoffeeItem } from '../contexts/ItemContext'
@@ -29,7 +30,11 @@ const EditItem = () => {
 
   return (
     <>
-        <button onClick={() => navigate(-1)}>Back</button>
+
+        <button id='back-button' onClick={() => navigate(-1)}>
+            <img src={backBtn} alt="back button" height='18' width='18' />
+            Back
+        </button>
         <Formik
             initialValues={initialData}
             validationSchema={Yup.object({
@@ -59,7 +64,7 @@ const EditItem = () => {
         {({setFieldValue, values}) => (
             <Form>
                 <div className="form-wrapper">
-                    <h3>EditItem</h3>
+                    <h2>EditItem</h2>
                     <div className="form-inputs-field">
                         <div className="form-f1">
                             <label>Coffee Type:</label>

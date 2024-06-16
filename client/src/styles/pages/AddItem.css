@@ -3,6 +3,10 @@
     font-weight: 500;
 }
 
+.form-wrapper h2 {
+    margin: 5px 0;
+}
+
 .form-inputs-field {
     height: 480px;
     display: flex;
@@ -20,4 +24,14 @@
     margin: 10px 0;
     padding: 10px 10px 10px 10px;
     border-radius: 15px;
+}
+
+/*Edit Component css*/
+
+#back-button {
+    background-image: url('../../assets/icons/return.png');
+    padding: 3px 9px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
 }
