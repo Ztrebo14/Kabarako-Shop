@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Root from './Root'
-import Dasboard from '../pages/Dashboard'
 import AddItem from '../pages/AddItem'
 import DisplayItem from '../pages/DisplayItem'
 import EditItem from '../pages/EditItem'
@@ -15,11 +14,10 @@ function App() {
       <ItemProvider>
         <Router>
           <Routes>
-            <Route path={'/' || '/home'} element={<Root/>}>
-              <Route index element={<Dasboard/>} />
-              <Route path='display-item' element={<DisplayItem/> } />
+            <Route path={'/'} element={<Root/>}>
+              <Route index element={<DisplayItem />} />
               <Route path='add-item' element={<AddItem/>} />
-              <Route path='display-item/edit-item/:itemId' element={<EditItem />} />
+              <Route path='/edit-item/:itemId' element={<EditItem />} />
             </Route>
           </Routes>
         </Router>

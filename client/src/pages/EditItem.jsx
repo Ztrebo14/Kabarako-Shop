@@ -45,7 +45,7 @@ const EditItem = () => {
                     // addItem function that add document reference to firestore db
                     await editItem(itemId, values)
                     console.log(values)
-                    navigate('/display-item')
+                    navigate('/')
                     // lets find the firestore document id
                     // console.log('This is the Document ID: ', values)
                 } catch (error) {

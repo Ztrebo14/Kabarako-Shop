@@ -2,25 +2,35 @@
     position: relative;
 }
 
-.displayCoffeeItem-container h2 {
-    margin-bottom: 10px;
-}
-
 .displayCoffeeItem-component {
     /* display: flex;
     flex-direction: column; */
-    height: 510px;
+    height: 470px;
     overflow-y: scroll;
 }
 
 .displayCoffeeItem-component ul{
     position: relative;
-    background: linear-gradient(lightblue, blue);
+    background: linear-gradient(lightblue, rgb(253, 238, 122));
     list-style-type: none;
     padding: 0;
     margin: 10px 10px 10px 10px;
     padding: 10px;
     border-radius: 10px;
+}
+
+.toggle-sort {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    padding: 10px;
+}
+
+.toggle-sort button {
+    margin: 0 20px;
+    padding: 5px;
+    border-radius: 15px;
 }
 
 .item-action {

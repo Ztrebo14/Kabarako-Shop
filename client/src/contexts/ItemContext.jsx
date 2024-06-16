@@ -53,7 +53,9 @@ const ItemProvider = ({ children }) => {
     }
 
     const editItem = async (coffeeId, updatedItem) => {
+      // get the coffeeId and assigned it to docRef
       const docRef = doc(db, 'coffeeList', coffeeId)
+      // using the updateDoc method, get the docRef and the updated values
       await updateDoc(docRef, updatedItem)
       try {
         setCoffeeList(prevList => 
