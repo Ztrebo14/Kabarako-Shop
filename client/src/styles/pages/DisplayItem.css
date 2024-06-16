@@ -2,10 +2,14 @@
     position: relative;
 }
 
+.displayCoffeeItem-container h2 {
+    margin-bottom: 10px;
+}
+
 .displayCoffeeItem-component {
     /* display: flex;
     flex-direction: column; */
-    height: 520px;
+    height: 510px;
     overflow-y: scroll;
 }
 
@@ -41,7 +45,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .modal-content {
@@ -58,4 +62,13 @@
 .modal-content button {
     margin: 5px;
     padding: 10px 20px;
+    transition: 0.2s ease-in;
+}
+
+.button-confirm:hover {
+    background-color: greenyellow;
+}
+
+.button-close:hover {
+    background-color: rgb(251, 91, 91);
 }

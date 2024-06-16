@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import '../styles/pages/DisplayItem.css'
+import '../../src/styles/pages/DisplayItem.css'
 import { useCoffeeItem } from '../contexts/ItemContext'
+import { useNavigate } from 'react-router-dom'
 
 const DisplayItem = () => {
-  const { coffeeList, deleteItem } = useCoffeeItem()
+  const { coffeeList, deleteItem, editItem } = useCoffeeItem()
   const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ itemToDelete, setItemToDelete ] = useState(null)
+  const navigate = useNavigate()
 
   const openModal = (coffeeId) => {
     setItemToDelete(coffeeId)
@@ -22,11 +24,10 @@ const DisplayItem = () => {
     closeModal()
   }
 
-    console.log(coffeeList)
   return (
     <>
       <div className="displayCoffeeItem-container">
-        <h3>Kabarako Shop List</h3>
+        <h2>Kabarako Shop List</h2>
         <div className="displayCoffeeItem-component">
           { coffeeList.map((coffee, index) => (
             <ul key={index}>
@@ -37,7 +38,7 @@ const DisplayItem = () => {
                 <li>Cost: <b>{coffee.coffeeCost}</b></li>
                 <li>Amount in Stock: <b>{coffee.coffeeStock}</b></li>
                 <div className="item-action">
-                  <button>Edit</button>
+                  <button onClick={() => navigate(`edit-item/${coffee.id}`)}>Edit</button>
                   <button onClick={() => openModal(coffee.id)}>Delete</button>
                   <button>Order Coffee</button>
                 </div>
@@ -50,8 +51,8 @@ const DisplayItem = () => {
           <div className="modal-content">
             <h4>Confirm Deletion</h4>
             <p>Are you sure you want to delete this item?</p>
-            <button onClick={confirmDelete}>Yes</button>
-            <button onClick={closeModal}>No</button>
+            <button className='button-confirm' onClick={confirmDelete}>Yes</button>
+            <button className='button-close' onClick={closeModal}>No</button>
           </div>
         </div>
       )}

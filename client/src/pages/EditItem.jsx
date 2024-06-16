@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/pages/AddItem.css'
-import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { db } from '../firebase'
-import { collection, addDoc } from 'firebase/firestore'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useCoffeeItem } from '../contexts/ItemContext'
-import { v4 as uuidv4 } from 'uuid'
 
-const AddItem = () => {
-    const { addItem } = useCoffeeItem()
+
+const EditItem = () => {
+    const { itemId } = useParams() 
+    const navigate = useNavigate()
+    const { editItem, coffeeList } = useCoffeeItem()
     const [ coffeeCategory, setCoffeeCategory ] = useState ('')
+
+    const initialData = coffeeList.find(item => item.id === itemId) || {
+        coffeeType: '',
+        coffeeName: '',
+        coffeeSize: '',
+        coffeePrice: '',
+        coffeeCost: '',
+        coffeeStock: '',
+    }
 
     const coffeeNames = {
         Arabica: ['Cappuccino', 'Latte', 'Flat White', 'Americano', 'ColdBrew', 'Mocha'],
@@ -19,16 +29,9 @@ const AddItem = () => {
 
   return (
     <>
+        <button onClick={() => navigate(-1)}>Back</button>
         <Formik
-            initialValues={{
-                coffeeId: uuidv4(),
-                coffeeType: '',
-                coffeeName: '',
-                coffeeSize: '',
-                coffeePrice: '',
-                coffeeCost: '',
-                coffeeStock: '',
-            }}
+            initialValues={initialData}
             validationSchema={Yup.object({
                 coffeeType: Yup.string().required('Required'),
                 coffeeName: Yup.string().required('Required'),
@@ -37,27 +40,26 @@ const AddItem = () => {
                 coffeeCost: Yup.number().max(300, 'Must be less than 300').required('Required').positive(),
                 coffeeStock: Yup.number().max(999, 'Maximum amount of stock').required('Required')
             })}
-            onSubmit={async (values, { setSubmitting, resetForm }) => {
+            onSubmit={async (values, { setSubmitting }) => {
                 try {
                     // addItem function that add document reference to firestore db
-                    await addItem(values)
-                    alert('Item added successfully')
-                    resetForm()
-
+                    await editItem(itemId, values)
+                    console.log(values)
+                    navigate('/display-item')
                     // lets find the firestore document id
-                    console.log('This is the Document ID: ', values)
+                    // console.log('This is the Document ID: ', values)
                 } catch (error) {
-                    console.error("Error adding document: ", error);
-                    alert("Error adding item, please try again.");
+                    console.error("Error updating document: ", error);
+                    alert(`Error updating item: ${error.message}`);
                 } finally {
                     setSubmitting(false)
                 }
             }}
         >
-        {({setFieldValue}) => (
+        {({setFieldValue, values}) => (
             <Form>
                 <div className="form-wrapper">
-                    <h2>Add Coffee Item</h2>
+                    <h3>EditItem</h3>
                     <div className="form-inputs-field">
                         <div className="form-f1">
                             <label>Coffee Type:</label>
@@ -82,11 +84,11 @@ const AddItem = () => {
                         </div>
                         <div className="form-f2">
                             <label>Coffee Name:</label>
-                            { coffeeCategory && (
+                            { values.coffeeType && (
                                 <>
                                     <Field as='select' type='text' name='coffeeName' >
                                         <option value="">Select Coffee Name</option>
-                                        { coffeeNames[coffeeCategory].map((name) => (
+                                        { coffeeNames[values.coffeeType]?.map((name) => (
                                             <option key={name} value={name}>
                                                 {name}
                                             </option>
@@ -137,4 +139,4 @@ const AddItem = () => {
   )
 }
 
-export default AddItem
+export default EditItem

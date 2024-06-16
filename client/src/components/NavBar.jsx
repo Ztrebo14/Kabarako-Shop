@@ -6,7 +6,9 @@ const NavBar = () => {
   return (
     <>
       <div className="navbar-wrapper">
-        <h3>Welcome to Kabarako Shop</h3>    
+        <div className="app-title">
+          <h3>Welcome to <br /><i>Kabarako Shop</i></h3>
+        </div>
         <div className="nav-links">
           <NavLink to={'/'}>Dashboard</NavLink>
           <NavLink to={'display-item'}>Coffee List</NavLink>

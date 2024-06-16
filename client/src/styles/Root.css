@@ -14,11 +14,11 @@
 }
 
 .outlet {
-    background-color: rgb(94, 94, 94);
+    background-color: rgb(134, 94, 40);
     border-radius: 15px;
     padding: 10px;
     margin: 0 5px;
     height: 550px;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 

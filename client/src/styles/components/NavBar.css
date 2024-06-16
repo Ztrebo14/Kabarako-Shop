@@ -6,6 +6,15 @@
     padding: 10px 0 ;
     border-radius: 0 15px 15px 0;
 }
+
+.app-title {
+    text-align: center;
+}
+
+.app-title i {
+    font-size: 30px;
+}
+
 .navbar-wrapper a {
     text-decoration: none;
     color: white;
@@ -18,9 +27,16 @@
 }
 
 .nav-links a {
-    background-color: aqua;
-    color: black;
+    border: 2px solid rgb(65, 30, 30);
+    font-weight: 600;
+    color: rgb(255, 228, 222);
     border-radius: 10px;
     margin: 10px 0;
     padding: 10px;
+    transition: 0.3s ease-in;
+}
+
+.nav-links a:hover {
+    background-color: rgb(23, 22, 22);
+    font-weight: 900;
 }

@@ -4,6 +4,7 @@ import Root from './Root'
 import Dasboard from '../pages/Dashboard'
 import AddItem from '../pages/AddItem'
 import DisplayItem from '../pages/DisplayItem'
+import EditItem from '../pages/EditItem'
 import ItemProvider from '../contexts/ItemContext'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
               <Route index element={<Dasboard/>} />
               <Route path='display-item' element={<DisplayItem/> } />
               <Route path='add-item' element={<AddItem/>} />
+              <Route path='display-item/edit-item/:itemId' element={<EditItem />} />
             </Route>
           </Routes>
         </Router>

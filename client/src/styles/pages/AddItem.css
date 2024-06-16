@@ -1,0 +1,23 @@
+.form-wrapper label {
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.form-inputs-field {
+    height: 480px;
+    display: flex;
+    flex-direction: column;   
+}
+
+.form-inputs-field .form-submit {
+    padding: 10px;
+    background-color: rgb(169, 133, 83);
+    border-radius: 10px;
+}
+
+.form-f1, .form-f2, .form-f3, .form-f4, .form-f5, .form-f6 {
+    background-color: rgb(255, 203, 129);
+    margin: 10px 0;
+    padding: 10px 10px 10px 10px;
+    border-radius: 15px;
+}

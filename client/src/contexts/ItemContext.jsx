@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useEffect, useState } from 'react'
-import { collection, getDocs, deleteDoc, doc, addDoc } from 'firebase/firestore'
+import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const ItemContext = createContext()
@@ -19,7 +19,7 @@ const ItemProvider = ({ children }) => {
           const items = []
           querySnapshot.forEach((doc) => {
             // Log each document ID and data
-            console.log(`${doc.id} => ${doc.data()}`);
+            // console.log(`${doc.id} => ${doc.data()}`);
 
             // Add each document's data to the items array
             items.push({ id: doc.id, ...doc.data() });
@@ -51,6 +51,22 @@ const ItemProvider = ({ children }) => {
         alert(`Error deleting document: ${error.message}`);
       }
     }
+
+    const editItem = async (coffeeId, updatedItem) => {
+      const docRef = doc(db, 'coffeeList', coffeeId)
+      await updateDoc(docRef, updatedItem)
+      try {
+        setCoffeeList(prevList => 
+          prevList.map(item => 
+            item.id === coffeeId ? { id: coffeeId, ...updatedItem} : item
+          )
+        )
+        alert('Item successfully updated!')
+      } catch (error) {
+        console.log('Error updating document: ', error)
+        alert(`Error updating item ${error.message}`)
+      }
+    }
     
   return (
     <>
@@ -58,7 +74,8 @@ const ItemProvider = ({ children }) => {
            coffeeList, 
            setCoffeeList, 
            deleteItem, 
-           addItem 
+           addItem,
+           editItem
         }}>
             {children}
         </ItemContext.Provider>
