@@ -4,15 +4,17 @@ import { useCoffeeItem } from '../contexts/ItemContext'
 import { useNavigate } from 'react-router-dom'
 
 const DisplayItem = () => {
-  const { coffeeList, deleteItem, editItem } = useCoffeeItem()
+  const { coffeeList, deleteItem, orderItem } = useCoffeeItem()
   const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ itemToDelete, setItemToDelete ] = useState(null)
+  const [ itemToOrder, setItemToOrder ] = useState(null)
+  const [ quantityOrder, setQuantityOrder ] = useState('')
   const [ sortConfig, setSortConfig ] = useState({ field: 'coffeeType', order: 'asc'})
   const navigate = useNavigate()
 
-  const openModal = (coffeeId) => {
-    setItemToDelete(coffeeId)
+  const openDeleteModal = (coffeeId) => {
     setIsModalOpen(true)
+    setItemToDelete(coffeeId)
   }
 
   const closeModal = () => {
@@ -22,6 +24,17 @@ const DisplayItem = () => {
 
   const confirmDelete = () => {
     deleteItem(itemToDelete)
+    closeModal()
+  }
+
+  const openOrderModal = (coffeeId) => {
+    setIsModalOpen(true)
+    setItemToOrder(coffeeId)
+  }
+
+
+  const confirmOrder = (quantity) => {
+    orderItem(itemToOrder, quantity)
     closeModal()
   }
 
@@ -47,7 +60,7 @@ const DisplayItem = () => {
         }
       }
       return { field, order: 'asc' }
-    })
+    }) 
   }
 
   return (
@@ -82,7 +95,8 @@ const DisplayItem = () => {
                 <li>Amount in Stock: <b>{coffee.coffeeStock}</b></li>
                 <div className="item-action">
                   <button onClick={() => navigate(`edit-item/${coffee.id}`)}>Edit</button>
-                  <button onClick={() => openModal(coffee.id)}>Delete</button>
+                  <button onClick={() => openDeleteModal(coffee.id)}>Delete</button>
+                  <button onClick={() => openOrderModal(coffee.id)}>Order Coffee</button>
                 </div>
             </ul>
           )) }
@@ -95,6 +109,16 @@ const DisplayItem = () => {
             <p>Are you sure you want to delete this item?</p>
             <button className='button-confirm' onClick={confirmDelete}>Yes</button>
             <button className='button-close' onClick={closeModal}>No</button>
+          </div>
+        </div>
+      )}
+      { isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h4>Order Coffee</h4>
+            <p>How many {} to order?</p>
+            <input type="number" value={quantityOrder} onChange={(e) => setQuantityOrder(e.target.value)}/>
+            <button onClick={() => confirmOrder(quantityOrder)}>Order</button>
           </div>
         </div>
       )}

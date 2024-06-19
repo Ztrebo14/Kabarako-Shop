@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useEffect, useState } from 'react'
-import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc } from 'firebase/firestore'
+import { collection, getDocs, doc, deleteDoc, addDoc, updateDoc, runTransaction, Transaction } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const ItemContext = createContext()
@@ -69,6 +69,40 @@ const ItemProvider = ({ children }) => {
         alert(`Error updating item ${error.message}`)
       }
     }
+
+    const orderItem = async (coffeeId, quantity) => {
+      //first get the item doc in firestore db and assign it
+      const itemRef = doc(db, 'coffeeList', coffeeId)
+
+      try {
+        //use runTransact function from firestore
+        await runTransaction(db, async (transaction) => {
+        const itemDoc  = await transaction.get(itemRef)
+        if (!itemDoc.exists()) {
+          throw new Error('Item does not exist')
+        }
+
+        const newCoffeeStock = itemDoc.data().coffeeStock - quantity
+
+        if (newCoffeeStock < 0) {
+          throw new Error('No enough inventory')
+        }
+
+        transaction.update(itemRef, {
+          coffeeStock: newCoffeeStock
+        })
+        setCoffeeList(prevList => 
+          prevList.map(item => 
+            item.id === coffeeId ? { ...item, coffeeStock: newCoffeeStock  } : item
+          )
+        )
+      })
+      alert('Transaction successfully committed')
+      console.log('Transaction successfully committed')
+      } catch (error) {
+        console.log('Transaction failed', error)
+      }
+    }
     
   return (
     <>
@@ -77,7 +111,8 @@ const ItemProvider = ({ children }) => {
            setCoffeeList, 
            deleteItem, 
            addItem,
-           editItem
+           editItem,
+           orderItem
         }}>
             {children}
         </ItemContext.Provider>

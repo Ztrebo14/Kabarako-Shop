@@ -10,7 +10,7 @@ const NavBar = () => {
           <h3>Welcome to <br /><i>Kabarako Shop</i></h3>
         </div>
         <div className="nav-links">
-          <NavLink to={'/'}>Coffee List</NavLink>
+          <NavLink to={'display-item'}>Coffee List</NavLink>
           <NavLink to={'add-item'}>Add Item</NavLink>
 
         </div>     
