@@ -12,11 +12,11 @@ function App() {
   return (
     <>
       <ItemProvider>
-        <Router basename="/kabarako-shop">
+        <Router>
           <Routes>
             <Route path='/' element={<Root/>}>
-              <Route path='display-item' element={<DisplayItem />} />
-              <Route path='add-item' element={<AddItem/>} />
+              <Route index element={<DisplayItem />} />
+              <Route path='/add-item' element={<AddItem/>} />
               <Route path='/edit-item/:itemId' element={<EditItem />} />
             </Route>
           </Routes>
